@@ -4,7 +4,7 @@ import json
 from langchain_groq import ChatGroq
 st.set_page_config(
     page_title="Transaction Analyzer",
-    page_icon="💳 2",
+    page_icon="💳 2")
 # Set environment variables before imports
 os.environ["USER_AGENT"] = "RAG-Chat-Assistant/1.0"
 os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
