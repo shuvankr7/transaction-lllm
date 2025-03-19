@@ -26,12 +26,13 @@ def initialize_rag_system(groq_api_key, groq_model, temperature, max_tokens):
 def process_transaction_message(message, llm):
     system_prompt = (
 "Check if this message is a valid transaction message or not. "
-"If valid, extract the following data: Amount, Transaction Type, Bank Name, Card Type, paied to whom, Transaction Mode, Transaction Date, Reference Number, and tag."
+"If valid, extract the following data: Amount, Transaction Type, Bank Name, Card Type, paied to whom,marchent, Transaction Mode, Transaction Date, Reference Number, and tag."
 """example 1: messsage - Rs.105.00 spent on your SBI Credit Card ending with 5775 at Auto Fuel Station on 18-03-25 via UPI (Ref No. 507775912830). Trxn. not done by you? Report at https://sbicard.com/Dispute , output :{
 "Amount":105
 "Transaction Type":"Debit"
 "Bank Name":"SBI"
 "Card Type":"Credit Card"
+"marchent":"Auto Fuel Station"
 "paied to whom":"Auto Fuel Station"
 "Transaction Mode":"Credit Card"
 "Transaction Date":"19-03-25"
@@ -40,7 +41,7 @@ def process_transaction_message(message, llm):
 0:"Transport"
 ]
 } """
-"Tag meaning which category of spending, if amazon then shopping etc"
+"Tag meaning which category of spending, if amazon then shopping etc, if zomato then eating"
 "return null if it is a personal messege, bill payment reminder, ads, or anything non transactional"  
 "Just give the json output, Don't say anything else , if there is no output then don't predict, say it is null"
     "$3000 will be credited in your bank account - this looks like personal messege , so ignore it"
