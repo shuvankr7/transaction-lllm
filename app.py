@@ -60,13 +60,19 @@ def process_transaction_message(message, llm):
         "ignore all messege like personal messege, ads, loan ads, bill alert, spam and all, just focus on valid transaction messege")
         
     input_prompt = f"{system_prompt}\nMessage: {message}"
+    
     response = llm.invoke(input_prompt)
-    try:
-        return json.loads(response.content)  # Convert response to JSON
-    except json.JSONDecodeError:
-        return None
+    if response is None:
+        return None  # Handle None response
 
-    return response
+    try:
+        return json.loads(response.content)  # Ensure response is valid JSON
+    except AttributeError:
+        return None  # Handle missing content error
+    except json.JSONDecodeError:
+        return None  # Handle invalid JSON response
+
+   
 
 st.title("Transaction Message Extractor")
 
@@ -77,7 +83,7 @@ if llm:
     if st.button("Extract Details"):
         if user_input:
             result = process_transaction_message(user_input, llm)
-            st.json(result.content)
-
-        else:
-            st.warning("Please enter a transaction message.")
+            if result:
+                st.json(result)  # Display valid JSON response
+            else:
+                st.error("Invalid response or non-transactional message.")
