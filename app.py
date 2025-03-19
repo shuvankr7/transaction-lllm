@@ -37,9 +37,7 @@ def process_transaction_message(message, llm):
 "Transaction Mode":"Credit Card"
 "Transaction Date":"19-03-25"
 "Reference Number":"507775912830"
-"tag":[
-0:"Transport"
-]
+"tag":["Transport"]
 } """
 """example 2 : ICICI Bank Acct XX337 debited for Rs 500.00 on 17-Jan-25; BPCL Ufill 2 credited. UPI:501714256060. Call 18002662 for dispute. SMS BLOCK 337 to 9215676766.
 output :{
