@@ -43,6 +43,9 @@ def process_transaction_message(message, llm):
 "Tag meaning which category of spending, if amazon then shopping etc"
 "return null if it is a personal messege, bill payment reminder, ads, or anything non transactional"  
 "Just give the json output, Don't say anything else , if there is no output then don't predict, say it is null"
+    "$3000 will be credited in your bank account - this looks like personal messege , so ignore it"
+    "ignore all messege like personal messege, ads, loan ads, bill alert, spam and all, just focus on valid transaction messege")
+        
     input_prompt = f"{system_prompt}\nMessage: {message}"
     response = llm.invoke(input_prompt)
 
