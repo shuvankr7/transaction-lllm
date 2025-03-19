@@ -30,7 +30,8 @@ def process_transaction_message(message, llm):
         "Merchant, Transaction Mode, Transaction Date, Reference Number, and tag."
     )
     input_prompt = f"{system_prompt}\nMessage: {message}"
-    response = llm.invoke({"input": input_prompt})
+    response = llm.invoke(input_prompt)
+
     return response
 
 st.title("Transaction Message Extractor")
