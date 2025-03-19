@@ -56,7 +56,10 @@ def process_transaction_message(message, llm):
         "return null if it is a personal messege, bill payment reminder, ads, or anything non transactional"  
         "Just give the json output, Don't say anything else , if there is no output then don't predict, say it is null" 
         "$3000 will be credited in your bank account - this looks like personal messege , so ignore it"
-        "ignore all messege like personal messege, ads, loan ads, bill alert, spam and all, just focus on valid transaction messege")
+        "ignore all messege like personal messege, ads, loan ads, bill alert, spam and all, just focus on valid transaction messege"
+        "If amount is credited to marchent account means it is debited from my account , so transaction type will be debited"
+    
+    )
         
     input_prompt = f"{system_prompt}\nMessage: {message}"
     input_prompt = f"{system_prompt}\nMessage: {message}"
