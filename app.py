@@ -1,5 +1,6 @@
 import os
 import streamlit as st
+import json
 from langchain_groq import ChatGroq
 
 # Set environment variables before imports
@@ -27,12 +28,21 @@ def process_transaction_message(message, llm):
     system_prompt = (
         "Check if this message is a valid transaction message or not. "
         "If valid, extract the following data: Amount, Transaction Type, Bank Name, Card Type, "
-        "Merchant, Transaction Mode, Transaction Date, Reference Number, and tag."
+        "Merchant, Transaction Mode, Transaction Date, Reference Number, and tag. "
+        "Return only valid JSON output without any extra text."
     )
     input_prompt = f"{system_prompt}\nMessage: {message}"
+    
     response = llm.invoke(input_prompt)
 
-    return response
+    if response is None:
+        return None  # Handle missing response
+
+    try:
+        json_output = json.loads(response.content)  # Ensure valid JSON
+        return json_output
+    except (AttributeError, json.JSONDecodeError):
+        return None  # Handle invalid JSON response
 
 st.title("Transaction Message Extractor")
 
@@ -40,9 +50,13 @@ llm = initialize_rag_system(DEFAULT_GROQ_API_KEY, "llama3-70b-8192", 0.5, 1024)
 if llm:
     st.success("RAG system initialized successfully!")
     user_input = st.text_area("Enter transaction message:")
+    
     if st.button("Extract Details"):
         if user_input:
             result = process_transaction_message(user_input, llm)
-            st.json(result.content)
+            if result:
+                st.json(result)  # Display JSON response
+            else:
+                st.error("Invalid or non-transactional message. Please try again.")
         else:
             st.warning("Please enter a transaction message.")
