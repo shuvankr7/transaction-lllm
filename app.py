@@ -76,6 +76,6 @@ if llm:
     if st.button("Extract Details"):
         if user_input:
             result = process_transaction_message(user_input, llm)
-            st.json(result)
+            st.json(result.content)
         else:
             st.warning("Please enter a transaction message.")
