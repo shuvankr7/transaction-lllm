@@ -61,6 +61,10 @@ def process_transaction_message(message, llm):
         
     input_prompt = f"{system_prompt}\nMessage: {message}"
     response = llm.invoke(input_prompt)
+    try:
+        return json.loads(response.content)  # Convert response to JSON
+    except json.JSONDecodeError:
+        return None
 
     return response
 
