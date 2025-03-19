@@ -50,9 +50,7 @@ output :{
 "Transaction Mode":"UPI"
 "Transaction Date":"19-03-25"
 "Reference Number":NULL
-"tag":[
-0:"Transport"
-]
+"tag":["Transport"]
 }"""
 "Tag meaning which category of spending, if amazon then shopping etc, if zomato then eating"
 "return null if it is a personal messege, bill payment reminder, ads, or anything non transactional"  
